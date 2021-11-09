@@ -11,8 +11,13 @@ services:
             - -c
             - |
               cd /mnt_src
-              python lightgbm-train.py
-              # python -c 'while 1: pass'
+              scrapy crawl \
+                --logfile=scrapy.log \
+                -a start_page_no=26 \
+                -a end_page_no=600 \
+                -a list_name="1.Best_Books_Ever" \
+                -s OUTPUT_FILE_SUFFIX="best_026_600" \
+                list
 
     # ports:
     #  - "5555:5555"
