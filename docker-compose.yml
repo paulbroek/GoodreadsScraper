@@ -13,10 +13,10 @@ services:
               cd /mnt_src
               scrapy crawl \
                 --logfile=scrapy.log \
-                -a start_page_no=26 \
-                -a end_page_no=600 \
+                -a start_page_no=1 \
+                -a end_page_no=700 \
                 -a list_name="1.Best_Books_Ever" \
-                -s OUTPUT_FILE_SUFFIX="best_026_600" \
+                -s OUTPUT_FILE_SUFFIX="best_001_700" \
                 list
 
     # ports:
