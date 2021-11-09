@@ -9,6 +9,6 @@ RUN apt-get update   		            && \
 
 #ADD ./requirements.txt /requirements.txt
 COPY requirements.txt /tmp
-RUN pip install -r /tmp/requirements_py39.txt
+RUN pip install -r /tmp/requirements.txt
 
 WORKDIR /src
