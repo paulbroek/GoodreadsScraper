@@ -7,8 +7,8 @@ services:
     container_name: scrape-goodreads
     # network_mode:  host
     environment:
-     - LIST_TO_SCRAPE="79365.Favorite_herbal_natural_health_books"
-     - OUTPUT_FILE_SUFFIX="best_herbal_books"
+     - LIST_TO_SCRAPE=79365.Favorite_herbal_natural_health_books
+     - OUTPUT_FILE_SUFFIX=best_herbal_books
     command:
             - /bin/bash
             - -c
