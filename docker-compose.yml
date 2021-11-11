@@ -22,8 +22,8 @@ services:
     # ports:
     #  - "5555:5555"
     environment:
-     - LIST_TO_SCRAPE=79365.Favorite_herbal_natural_health_books
-     # - LIST_TO_SCRAPE=1.Best_Books_Ever
+     - LIST_TO_SCRAPE="79365.Favorite_herbal_natural_health_books"
+     # - LIST_TO_SCRAPE="1.Best_Books_Ever"
      - OUTPUT_FILE_SUFFIX="best_herbal_books"
      # - OUTPUT_FILE_SUFFIX="best_001_700"
      # - AM_I_IN_A_DOCKER_CONTAINER=Yes
