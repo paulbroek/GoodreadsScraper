@@ -7,8 +7,10 @@ services:
     container_name: scrape-goodreads
     # network_mode:  host
     environment:
-     - LIST_TO_SCRAPE=79365.Favorite_herbal_natural_health_books
-     - OUTPUT_FILE_SUFFIX=best_herbal_books
+     # - LIST_TO_SCRAPE=79365.Favorite_herbal_natural_health_books
+     # - OUTPUT_FILE_SUFFIX=best_herbal_books
+     - LIST_TO_SCRAPE=1.Best_Books_Ever
+     - OUTPUT_FILE_SUFFIX=best_books
     command:
             - /bin/bash
             - -c
@@ -17,7 +19,7 @@ services:
               scrapy crawl \
                 --logfile=scrapy.log \
                 -a start_page_no=1 \
-                -a end_page_no=2 \
+                -a end_page_no=700 \
                 -a list_name=$${LIST_TO_SCRAPE} \
                 -s OUTPUT_FILE_SUFFIX=$${OUTPUT_FILE_SUFFIX} \
                 list

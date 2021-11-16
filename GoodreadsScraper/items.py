@@ -95,6 +95,7 @@ class BookItem(scrapy.Item):
     # Scalars
     url = Field()
 
+    cover_image = Field(input_processor=MapCompose(str.strip)) # added by paul
     title = Field(input_processor=MapCompose(str.strip))
     author = Field(input_processor=MapCompose(str.strip))
 
