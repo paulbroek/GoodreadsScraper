@@ -9,8 +9,10 @@ services:
     environment:
      # - LIST_TO_SCRAPE=79365.Favorite_herbal_natural_health_books
      # - OUTPUT_FILE_SUFFIX=best_herbal_books
-     - LIST_TO_SCRAPE=1.Best_Books_Ever
-     - OUTPUT_FILE_SUFFIX=best_books
+     - LIST_TO_SCRAPE=692.Best_Science_Books_Non_Fiction_Only
+     - OUTPUT_FILE_SUFFIX=692.Best_Science_Books_Non_Fiction_Only
+     # - LIST_TO_SCRAPE=1.Best_Books_Ever
+     # - OUTPUT_FILE_SUFFIX=best_books
     command:
             - /bin/bash
             - -c
