@@ -1,6 +1,5 @@
 version: '3.9'
 services:
-
   scrape-goodreads:
     # restart: unless-stopped
     image: scrapy-env
@@ -9,8 +8,10 @@ services:
     environment:
      # - LIST_TO_SCRAPE=79365.Favorite_herbal_natural_health_books
      # - OUTPUT_FILE_SUFFIX=best_herbal_books
-     - LIST_TO_SCRAPE=692.Best_Science_Books_Non_Fiction_Only
-     - OUTPUT_FILE_SUFFIX=692.Best_Science_Books_Non_Fiction_Only
+     # - LIST_TO_SCRAPE=692.Best_Science_Books_Non_Fiction_Only
+     # - OUTPUT_FILE_SUFFIX=692.Best_Science_Books_Non_Fiction_Only
+     - LIST_TO_SCRAPE=94619.Best_Popular_Computer_Science_Books_on_Goodreads
+     - OUTPUT_FILE_SUFFIX=94619.Best_Popular_Computer_Science_Books_on_Goodreads
      # - LIST_TO_SCRAPE=1.Best_Books_Ever
      # - OUTPUT_FILE_SUFFIX=best_books
     command:
@@ -26,10 +27,5 @@ services:
                 -s OUTPUT_FILE_SUFFIX=$${OUTPUT_FILE_SUFFIX} \
                 list
 
-    # ports:
-    #  - "5555:5555"
-     # - LIST_TO_SCRAPE="1.Best_Books_Ever"
-     # - OUTPUT_FILE_SUFFIX="best_001_700"
-     # - AM_I_IN_A_DOCKER_CONTAINER=Yes
     volumes:
      - /home/${USER}/repos/GoodreadsScraper:/mnt_src
