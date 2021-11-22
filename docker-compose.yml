@@ -10,8 +10,8 @@ services:
      # - OUTPUT_FILE_SUFFIX=best_herbal_books
      # - LIST_TO_SCRAPE=692.Best_Science_Books_Non_Fiction_Only
      # - OUTPUT_FILE_SUFFIX=692.Best_Science_Books_Non_Fiction_Only
-     - LIST_TO_SCRAPE=1170.Best_Business_Books
-     - OUTPUT_FILE_SUFFIX=1170.Best_Business_Books
+     - LIST_TO_SCRAPE=3227.Best_Books_For_Beginning_Entrepreneurs
+     - OUTPUT_FILE_SUFFIX=3227.Best_Books_For_Beginning_Entrepreneurs
      # - LIST_TO_SCRAPE=1.Best_Books_Ever
      # - OUTPUT_FILE_SUFFIX=best_books
     command:
