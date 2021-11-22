@@ -10,8 +10,8 @@ services:
      # - OUTPUT_FILE_SUFFIX=best_herbal_books
      # - LIST_TO_SCRAPE=692.Best_Science_Books_Non_Fiction_Only
      # - OUTPUT_FILE_SUFFIX=692.Best_Science_Books_Non_Fiction_Only
-     - LIST_TO_SCRAPE=542
-     - OUTPUT_FILE_SUFFIX=542
+     - LIST_TO_SCRAPE=2205
+     - OUTPUT_FILE_SUFFIX=2205
      # - LIST_TO_SCRAPE=1.Best_Books_Ever
      # - OUTPUT_FILE_SUFFIX=best_books
     command:
