@@ -22,7 +22,7 @@ services:
               scrapy crawl \
                 --logfile=scrapy.log \
                 -a start_page_no=1 \
-                -a end_page_no=3 \
+                -a end_page_no=20 \
                 -a list_name=$${LIST_TO_SCRAPE} \
                 -s OUTPUT_FILE_SUFFIX=$${OUTPUT_FILE_SUFFIX} \
                 list
