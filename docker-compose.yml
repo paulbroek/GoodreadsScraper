@@ -5,6 +5,7 @@ services:
     image: scrapy-env
     container_name: scrape-goodreads
     # network_mode:  host
+    # environmnet can be set in terminal using export LIST_TO_SCRAPE=some_list...
     # environment:
      # - LIST_TO_SCRAPE=79365.Favorite_herbal_natural_health_books
      # - OUTPUT_FILE_SUFFIX=best_herbal_books
@@ -23,8 +24,8 @@ services:
                 --logfile=scrapy.log \
                 -a start_page_no=1 \
                 -a end_page_no=20 \
-                -a list_name=$${LIST_TO_SCRAPE} \
-                -s OUTPUT_FILE_SUFFIX=$${LIST_TO_SCRAPE} \
+                -a list_name=${LIST_TO_SCRAPE} \
+                -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
                 list
 
     volumes:
