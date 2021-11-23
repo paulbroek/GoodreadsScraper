@@ -27,6 +27,7 @@ services:
                 -a list_name=${LIST_TO_SCRAPE} \
                 -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
                 list
+            # if you want to substitute lists from 'environment' section of this file, make sure to use double curly braces variable injection: ${{LIST_TO_SCRAPE}}
 
     volumes:
      - /home/${USER}/repos/GoodreadsScraper:/mnt_src
