@@ -5,7 +5,7 @@ services:
     image: scrapy-env
     container_name: scrape-goodreads
     # network_mode:  host
-    environment:
+    # environment:
      # - LIST_TO_SCRAPE=79365.Favorite_herbal_natural_health_books
      # - OUTPUT_FILE_SUFFIX=best_herbal_books
      # - LIST_TO_SCRAPE=692.Best_Science_Books_Non_Fiction_Only
