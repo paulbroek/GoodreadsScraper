@@ -10,8 +10,8 @@ services:
      # - OUTPUT_FILE_SUFFIX=best_herbal_books
      # - LIST_TO_SCRAPE=692.Best_Science_Books_Non_Fiction_Only
      # - OUTPUT_FILE_SUFFIX=692.Best_Science_Books_Non_Fiction_Only
-     - LIST_TO_SCRAPE=30903.Required_Reading_for_Success
-     - OUTPUT_FILE_SUFFIX=30903.Required_Reading_for_Success
+     # - LIST_TO_SCRAPE=30903.Required_Reading_for_Success
+     # - OUTPUT_FILE_SUFFIX=30903.Required_Reading_for_Success
      # - LIST_TO_SCRAPE=1.Best_Books_Ever
      # - OUTPUT_FILE_SUFFIX=best_books
     command:
@@ -24,7 +24,7 @@ services:
                 -a start_page_no=1 \
                 -a end_page_no=20 \
                 -a list_name=$${LIST_TO_SCRAPE} \
-                -s OUTPUT_FILE_SUFFIX=$${OUTPUT_FILE_SUFFIX} \
+                -s OUTPUT_FILE_SUFFIX=$${LIST_TO_SCRAPE} \
                 list
 
     volumes:
