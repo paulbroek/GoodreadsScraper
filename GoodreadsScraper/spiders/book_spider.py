@@ -18,8 +18,7 @@ class BookSpider(scrapy.Spider):
 
         loader.add_value('url', response.request.url)
 
-        # added by paul
-        loader.add_css("cover_image", "#coverImage::attr(src)")
+        loader.add_css("cover_image", "#coverImage::attr(src)") # added by paul
         loader.add_css("title", "#bookTitle::text")
         loader.add_css("author", "a.authorName>span::text")
 
