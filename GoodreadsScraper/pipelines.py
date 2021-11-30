@@ -40,3 +40,10 @@ class JsonLineItemSegregator(object):
         if item_type in self.types:
             self.exporters[item_type].export_item(item)
         return item
+
+        # here you can add code for pushing item to postgres..
+
+class SingleItemSegregator(object):
+    """ todo: implement scraping a book based on a book url only """
+
+    pass

@@ -27,5 +27,10 @@ class ListSpider(scrapy.Spider):
     def parse(self, response):
         list_of_books = response.css("a.bookTitle::attr(href)").extract()
 
+        # manual input override. don't know other way for now
+        list_of_books = ["/book/show/16085481-crazy-rich-asians", "/book/show/199519.The_Tibetan_Yogas_Of_Dream_And_Sleep"]
+        # print(f'{list_of_books=}')
+        print(f'{len(list_of_books)=}')
+
         for book in list_of_books:
             yield response.follow(book, callback=self.book_spider.parse)
