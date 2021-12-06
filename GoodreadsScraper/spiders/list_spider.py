@@ -52,7 +52,8 @@ class ListSpider(scrapy.Spider):
         # or listen for books through redis
         list_of_books = self.redis_generator()
         # print(f'{list_of_books=}')
-        print(f'{len(list_of_books)=}')
+        if isinstance(list_of_books, list):
+            print(f'{len(list_of_books)=}')
 
         for book in list_of_books:
             yield response.follow(book, callback=self.book_spider.parse)
