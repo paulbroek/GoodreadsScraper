@@ -65,4 +65,5 @@ class ListSpider(scrapy.Spider):
             print(f'{len(list_of_books)=}')
 
         for book in list_of_books:
+            logger.info(f"yielding {book=}")
             yield response.follow(book, callback=self.book_spider.parse)
