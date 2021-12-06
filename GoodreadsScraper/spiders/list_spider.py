@@ -48,7 +48,7 @@ class ListSpider(scrapy.Spider):
             item = self.redis.lpop(REDIS_TO_SCRAPE_KEY)
             if item:
                 logger.info(f'yielding {item=}')
-                yield item
+                yield f"/book/show/{item}"
             else:
                 sleep(3)
 
