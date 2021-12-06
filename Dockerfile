@@ -10,5 +10,6 @@ RUN apt-get update   		            && \
 #ADD ./requirements.txt /requirements.txt
 COPY requirements.txt /tmp
 RUN pip install -r /tmp/requirements.txt
+RUN pip install redis
 
 WORKDIR /src
