@@ -2,15 +2,20 @@
 
 import os
 from time import sleep
-import scrapy
+from os.path import join, dirname
 import logging
+import scrapy
 import redis
+from dotenv import load_dotenv
 
 from .book_spider import BookSpider
 
 GOODREADS_URL_PREFIX = "https://www.goodreads.com"
 REDIS_TO_SCRAPE_KEY = "goodreads_to_scrape"
 REDIS_TO_POSTGRES_KEY = 'goodreads_to_postgres'
+
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 logger = logging.getLogger(__name__)
 
