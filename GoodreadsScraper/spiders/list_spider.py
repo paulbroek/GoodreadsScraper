@@ -1,13 +1,18 @@
 """Spider to extract URL's of books from a Listopia list on Goodreads"""
 
 import os
+from time import sleep
 import scrapy
+import logging
 import redis
 
 from .book_spider import BookSpider
 
 GOODREADS_URL_PREFIX = "https://www.goodreads.com"
 REDIS_TO_SCRAPE_KEY = "goodreads_to_scrape"
+REDIS_TO_POSTGRES_KEY = 'goodreads_to_postgres'
+
+logger = logging.getLogger(__name__)
 
 class ListSpider(scrapy.Spider):
     """Extract URLs of books from a Listopia list on Goodreads
@@ -29,12 +34,23 @@ class ListSpider(scrapy.Spider):
             list_url = self.goodreads_list_url.format(list_name, page_no)
             self.start_urls.append(list_url)
 
+    def redis_generator(self):
+        # todo: use pubsub, so you don't have to sleep
+        while True:
+            item = self.redis.lpop(REDIS_TO_SCRAPE_KEY)
+            if item:
+                logger.info(f'yielding {item=}')
+                yield item
+            else:
+                sleep(3)
+
     def parse(self, response):
         list_of_books = response.css("a.bookTitle::attr(href)").extract()
 
         # manual input override. don't know other way for now
-        list_of_books = ["/book/show/16085481-crazy-rich-asians", "/book/show/199519.The_Tibetan_Yogas_Of_Dream_And_Sleep", "/book/show/50512348-the-message-game"]
+        # list_of_books = ["/book/show/16085481-crazy-rich-asians", "/book/show/199519.The_Tibetan_Yogas_Of_Dream_And_Sleep", "/book/show/50512348-the-message-game"]
         # or listen for books through redis
+        list_of_books = self.redis_generator()
         # print(f'{list_of_books=}')
         print(f'{len(list_of_books)=}')
 

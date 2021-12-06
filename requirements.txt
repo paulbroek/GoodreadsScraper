@@ -30,3 +30,4 @@ Twisted==20.3.0
 urllib3==1.26.5
 w3lib==1.21.0
 zope.interface==5.0.0
+redis
