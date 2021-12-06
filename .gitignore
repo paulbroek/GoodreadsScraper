@@ -4,6 +4,9 @@
 # Ignore logs
 *.log
 
+# ignore .env 
+*.env
+
 # Ignore generated datasets
 *.jl
 *.csv

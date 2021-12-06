@@ -5,6 +5,7 @@ import scrapy
 from .book_spider import BookSpider
 
 GOODREADS_URL_PREFIX = "https://www.goodreads.com"
+REDIS_TO_SCRAPE_KEY = "goodreads_to_scrape"
 
 class ListSpider(scrapy.Spider):
     """Extract URLs of books from a Listopia list on Goodreads
