@@ -1,6 +1,8 @@
 """Spider to extract URL's of books from a Listopia list on Goodreads"""
 
+import os
 import scrapy
+import redis
 
 from .book_spider import BookSpider
 
@@ -20,6 +22,7 @@ class ListSpider(scrapy.Spider):
         super().__init__()
         self.book_spider = BookSpider()
         self.books_from_redis = books_from_redis
+        self.redis = redis.Redis(host=os.environ.get('REDIS_HOST'), port=os.environ.get('REDIS_PORT'), password=os.environ.get('REDIS_PASS'), db=4)
 
         self.start_urls = []
         for page_no in range(int(start_page_no), int(end_page_no) + 1):
