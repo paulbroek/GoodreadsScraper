@@ -50,7 +50,8 @@ class ListSpider(scrapy.Spider):
                 logger.info(f'yielding {item=}')
                 yield f"/book/show/{item}"
             else:
-                sleep(3)
+                # sleep(1)
+                pass
 
     def parse(self, response):
         list_of_books = response.css("a.bookTitle::attr(href)").extract()
