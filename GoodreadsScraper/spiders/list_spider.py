@@ -50,7 +50,7 @@ class ListSpider(scrapy.Spider):
                 logger.info(f'yielding {item=}')
                 yield f"/book/show/{item}"
             else:
-                sleep(1)
+                sleep(1) # problem: parsing will not start, since the iterator should finish first
                 # break
 
     def parse(self, response):
