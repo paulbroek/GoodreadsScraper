@@ -34,6 +34,7 @@ class ListSpider(scrapy.Spider):
         self.books_from_redis = books_from_redis
         host, port = os.environ.get('REDIS_HOST'), os.environ.get('REDIS_PORT')
         logger.info(f"{host=} {port=}")
+        print(f"{host=} {port=}")
         self.redis = redis.Redis(host=host, port=port, password=os.environ.get('REDIS_PASS'), db=4, decode_responses=True)
 
         self.start_urls = []
