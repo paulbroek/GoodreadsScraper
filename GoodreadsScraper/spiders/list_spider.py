@@ -59,7 +59,8 @@ class ListSpider(scrapy.Spider):
         # manual input override. don't know other way for now
         # list_of_books = ["/book/show/16085481-crazy-rich-asians", "/book/show/199519.The_Tibetan_Yogas_Of_Dream_And_Sleep", "/book/show/50512348-the-message-game"]
         # or listen for books through redis
-        list_of_books = self.redis_generator()
+        if self.books_from_redis:
+            list_of_books = self.redis_generator()
         # list_of_books = list(self.redis_generator())
         # print(f'{list_of_books=}')
         if isinstance(list_of_books, list):
