@@ -25,7 +25,7 @@ services:
                 -a start_page_no=1 \
                 -a end_page_no=3 \
                 -a list_name=${LIST_TO_SCRAPE} \
-                -a books_from_redis=False \
+                -a books_from_redis=0 \
                 -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
                 list
             # if you want to substitute lists from 'environment' section of this file, make sure to use double curly braces variable injection: ${{LIST_TO_SCRAPE}}
