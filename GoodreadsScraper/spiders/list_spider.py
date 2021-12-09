@@ -65,7 +65,7 @@ class ListSpider(scrapy.Spider):
         # list_of_books = list(self.redis_generator())
         # print(f'{list_of_books=}')
         if isinstance(list_of_books, list):
-            print(f'{len(list_of_books)=}')
+            logger.info(f'{len(list_of_books)=}')
 
         for book in list_of_books:
             logger.info(f"yielding {book=}")
