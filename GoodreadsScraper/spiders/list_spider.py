@@ -1,7 +1,7 @@
 """Spider to extract URL's of books from a Listopia list on Goodreads"""
 
 import os
-from time import sleep
+# from time import sleep
 from os.path import join, dirname
 import logging
 import scrapy
