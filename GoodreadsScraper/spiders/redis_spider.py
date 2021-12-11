@@ -48,7 +48,7 @@ class RedisSpider(scrapy.Spider):
     def redis_generator(self):
         # todo: use pubsub, so you don't have to sleep
         items = self.redis.lrange(REDIS_TO_SCRAPE_KEY, 0, -1)
-        logger.info(f"got {len(items)} items")
+        logger.info(f"got {len(items)} items from redis")
         items = iter(items) # turn list into iterator
         while True:
             # item = self.redis.lpop(REDIS_TO_SCRAPE_KEY)
