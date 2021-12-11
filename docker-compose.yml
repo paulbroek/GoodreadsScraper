@@ -1,9 +1,9 @@
 version: '3.9'
 services:
-  scrape-goodreads:
+  scrape-goodreads-list:
     # restart: unless-stopped
     image: scrapy-env
-    container_name: scrape-goodreads
+    container_name: scrape-goodreads-list
     # network_mode:  host
     # environmnet can be set in terminal using export LIST_TO_SCRAPE=some_list...
     # environment:
@@ -25,10 +25,25 @@ services:
                 -a start_page_no=1 \
                 -a end_page_no=3 \
                 -a list_name=${LIST_TO_SCRAPE} \
-                -a books_from_redis=1 \
                 -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
                 list
             # if you want to substitute lists from 'environment' section of this file, make sure to use double curly braces variable injection: ${{LIST_TO_SCRAPE}}
 
+    volumes:
+     - /home/${USER}/repos/GoodreadsScraper:/mnt_src
+
+  scrape-goodreads-redis:
+    image: scrapy-env
+    container_name: scrape-goodreads-redis
+    command:
+            - /bin/bash
+            - -c
+            - |
+              cd /mnt_src
+              scrapy crawl \
+                --logfile=scrapy.log \
+                -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
+                redis
+                
     volumes:
      - /home/${USER}/repos/GoodreadsScraper:/mnt_src

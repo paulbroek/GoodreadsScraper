@@ -12,6 +12,8 @@
 BOT_NAME = 'GoodreadsScraper'
 
 SPIDER_MODULES = ['GoodreadsScraper.spiders']
+# SPIDER_MODULES = ['GoodreadsScraper.spiders.list.list_spider', 'GoodreadsScraper.spiders.redis.redis_spider']
+# SPIDER_MODULES = ['GoodreadsScraper.list_spider', 'GoodreadsScraper.redis_spider']
 NEWSPIDER_MODULE = 'GoodreadsScraper.spiders'
 
 
