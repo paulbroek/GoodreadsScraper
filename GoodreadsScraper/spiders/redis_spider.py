@@ -36,6 +36,8 @@ class RedisSpider(scrapy.Spider):
         # print(f"{host=} {port=}")
         self.redis = redis.Redis(host=host, port=port, password=os.environ.get('REDIS_PASS'), db=4, decode_responses=True)
 
+        # spiders need some sort of start_url?
+        self.start_urls = [GOODREADS_URL_PREFIX]
         # self.start_urls = []
         # for page_no in range(int(start_page_no), int(end_page_no) + 1):
         #     list_url = self.goodreads_list_url.format(list_name, page_no)
