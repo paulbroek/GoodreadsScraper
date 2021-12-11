@@ -38,6 +38,8 @@ class RedisSpider(scrapy.Spider):
 
         # spiders need some sort of start_url?
         self.start_urls = [GOODREADS_URL_PREFIX]
+        # or use some dummy page
+
         # self.start_urls = []
         # for page_no in range(int(start_page_no), int(end_page_no) + 1):
         #     list_url = self.goodreads_list_url.format(list_name, page_no)
@@ -45,7 +47,9 @@ class RedisSpider(scrapy.Spider):
 
     def redis_generator(self):
         # todo: use pubsub, so you don't have to sleep
-        items = iter(self.redis.lrange(REDIS_TO_SCRAPE_KEY, 0, -1))
+        items = self.redis.lrange(REDIS_TO_SCRAPE_KEY, 0, -1)
+        logger.info(f"got {len(items)} items")
+        items = iter(items) # turn list into iterator
         while True:
             # item = self.redis.lpop(REDIS_TO_SCRAPE_KEY)
             # do not pop for now, since items will be lost 
