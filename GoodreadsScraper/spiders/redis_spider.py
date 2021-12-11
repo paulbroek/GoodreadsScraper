@@ -45,7 +45,7 @@ class RedisSpider(scrapy.Spider):
 
     def redis_generator(self):
         # todo: use pubsub, so you don't have to sleep
-        items = self.redis.lrange(REDIS_TO_SCRAPE_KEY, 0, -1)
+        items = iter(self.redis.lrange(REDIS_TO_SCRAPE_KEY, 0, -1))
         while True:
             # item = self.redis.lpop(REDIS_TO_SCRAPE_KEY)
             # do not pop for now, since items will be lost 
