@@ -1,9 +1,9 @@
 version: '3.9'
 services:
   scrape-goodreads-list:
-    # restart: unless-stopped
     image: scrapy-env
     container_name: scrape-goodreads-list
+    # restart: unless-stopped
     # network_mode:  host
     # environmnet can be set in terminal using export LIST_TO_SCRAPE=some_list...
     # environment:
@@ -35,6 +35,7 @@ services:
   scrape-goodreads-redis:
     image: scrapy-env
     container_name: scrape-goodreads-redis
+    # restart: unless-stopped
     command:
             - /bin/bash
             - -c
@@ -44,6 +45,6 @@ services:
                 --logfile=scrapy.log \
                 -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
                 redis
-                
+
     volumes:
      - /home/${USER}/repos/GoodreadsScraper:/mnt_src
