@@ -22,8 +22,8 @@ services:
               cd /mnt_src
               scrapy crawl \
                 --logfile=scrapy.log \
-                -a start_page_no=1 \
-                -a end_page_no=3 \
+                -a start_page_no=600 \
+                -a end_page_no=2000 \
                 -a list_name=${LIST_TO_SCRAPE} \
                 -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
                 list
