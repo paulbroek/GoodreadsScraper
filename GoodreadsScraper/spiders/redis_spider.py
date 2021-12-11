@@ -68,7 +68,7 @@ class RedisSpider(scrapy.Spider):
         # list_of_books = ["/book/show/16085481-crazy-rich-asians", "/book/show/199519.The_Tibetan_Yogas_Of_Dream_And_Sleep", "/book/show/50512348-the-message-game"]
         # or listen for books through redis
         list_of_books = self.redis_generator()
-        logger.info(f"{len(list_of_books)=}")
+        # logger.info(f"{len(list_of_books)=}")
 
         for book in list_of_books:
             logger.info(f"yielding {book=}")
