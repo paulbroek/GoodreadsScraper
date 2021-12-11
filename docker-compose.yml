@@ -37,7 +37,6 @@ services:
     container_name: scrape-goodreads-redis
     # restart: unless-stopped
     environment:
-      - LIST_TO_SCRAPE=redis_books
       - OUTPUT_FILE_SUFFIX=redis_books
     command:
             - /bin/bash
@@ -46,7 +45,7 @@ services:
               cd /mnt_src
               scrapy crawl \
                 --logfile=scrapy.log \
-                -s OUTPUT_FILE_SUFFIX=${{LIST_TO_SCRAPE}} \
+                -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
                 redis
 
     volumes:
