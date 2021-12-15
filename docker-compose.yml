@@ -46,7 +46,7 @@ services:
               cd /mnt_src
               scrapy crawl \
                 --logfile=scrapy.log \
-                -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
+                -s OUTPUT_FILE_SUFFIX=${{LIST_TO_SCRAPE}} \
                 redis
 
     volumes:
