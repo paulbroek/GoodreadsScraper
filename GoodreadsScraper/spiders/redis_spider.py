@@ -1,11 +1,11 @@
-"""Spider to extract URL's of books from a Listopia list on Goodreads"""
+"""Spider to extract URL's of books from a Listopia list on Goodreads."""
 
-import os
-# from time import sleep
-from os.path import join, dirname
 import logging
-import scrapy
+import os
+from os.path import dirname, join
+
 import redis
+import scrapy
 from dotenv import load_dotenv
 
 from .book_spider import BookSpider
@@ -20,10 +20,11 @@ load_dotenv(dotenv_path)
 logger = logging.getLogger(__name__)
 
 class RedisSpider(scrapy.Spider):
-    """Extract URLs of books from a Listopia list on Goodreads
+    """Extract URLs of books from a Listopia list on Goodreads.
 
-        This subsequently passes on the URLs to BookSpider
+    This subsequently passes on the URLs to BookSpider
     """
+    
     name = "redis"
 
     goodreads_list_url = "https://www.goodreads.com/list/show/{}?page={}"
@@ -63,7 +64,6 @@ class RedisSpider(scrapy.Spider):
                 logger.info(f'yielding {item=}')
                 yield f"/book/show/{item}"
             else:
-                # sleep(1) # problem: parsing will not start, since the iterator should finish first
                 break
 
     def parse(self, response):

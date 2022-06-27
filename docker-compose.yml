@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 services:
   scrape-goodreads-list:
     image: scrapy-env
@@ -7,30 +7,30 @@ services:
     # network_mode:  host
     # environmnet can be set in terminal using export LIST_TO_SCRAPE=some_list...
     # environment:
-     # - LIST_TO_SCRAPE=79365.Favorite_herbal_natural_health_books
-     # - OUTPUT_FILE_SUFFIX=best_herbal_books
-     # - LIST_TO_SCRAPE=692.Best_Science_Books_Non_Fiction_Only
-     # - OUTPUT_FILE_SUFFIX=692.Best_Science_Books_Non_Fiction_Only
-     # - LIST_TO_SCRAPE=30903.Required_Reading_for_Success
-     # - OUTPUT_FILE_SUFFIX=30903.Required_Reading_for_Success
-     # - LIST_TO_SCRAPE=1.Best_Books_Ever
-     # - OUTPUT_FILE_SUFFIX=best_books
+    # - LIST_TO_SCRAPE=79365.Favorite_herbal_natural_health_books
+    # - OUTPUT_FILE_SUFFIX=best_herbal_books
+    # - LIST_TO_SCRAPE=692.Best_Science_Books_Non_Fiction_Only
+    # - OUTPUT_FILE_SUFFIX=692.Best_Science_Books_Non_Fiction_Only
+    # - LIST_TO_SCRAPE=30903.Required_Reading_for_Success
+    # - OUTPUT_FILE_SUFFIX=30903.Required_Reading_for_Success
+    # - LIST_TO_SCRAPE=1.Best_Books_Ever
+    # - OUTPUT_FILE_SUFFIX=best_books
     command:
-            - /bin/bash
-            - -c
-            - |
-              cd /mnt_src
-              scrapy crawl \
-                --logfile=scrapy.log \
-                -a start_page_no=1 \
-                -a end_page_no=2 \
-                -a list_name=${LIST_TO_SCRAPE} \
-                -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
-                list
-            # if you want to substitute lists from 'environment' section of this file, make sure to use double curly braces variable injection: ${{LIST_TO_SCRAPE}}
+      - /bin/bash
+      - -c
+      - |
+        cd /mnt_src
+        scrapy crawl \
+          --logfile=scrapy.log \
+          -a start_page_no=1 \
+          -a end_page_no=2 \
+          -a list_name=${LIST_TO_SCRAPE} \
+          -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
+          list
+      # if you want to substitute lists from 'environment' section of this file, make sure to use double curly braces variable injection: ${{LIST_TO_SCRAPE}}
 
     volumes:
-     - /home/${USER}/repos/GoodreadsScraper:/mnt_src
+      - /home/${USER}/repos/GoodreadsScraper:/mnt_src
 
   scrape-goodreads-redis:
     image: scrapy-env
@@ -39,15 +39,16 @@ services:
     environment:
       - LIST_TO_SCRAPE=redis_books
       - OUTPUT_FILE_SUFFIX=redis_books
+      - REDIS_HOST=77.249.149.174
     command:
-            - /bin/bash
-            - -c
-            - |
-              cd /mnt_src
-              scrapy crawl \
-                --logfile=scrapy.log \
-                -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
-                redis
+      - /bin/bash
+      - -c
+      - |
+        cd /mnt_src
+        scrapy crawl \
+          --logfile=scrapy.log \
+          -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
+          redis
 
     volumes:
-     - /home/${USER}/repos/GoodreadsScraper:/mnt_src
+      - /home/${USER}/repos/GoodreadsScraper:/mnt_src
