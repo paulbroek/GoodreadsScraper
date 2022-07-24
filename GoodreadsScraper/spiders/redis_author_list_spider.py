@@ -11,7 +11,9 @@ GOODREADS_URL_PREFIX = "https://www.goodreads.com"
 
 logger = logging.getLogger(__name__)
 
-file = "/home/paul/repos/misc-scraping/misc_scraping/scrape_goodreads/scrape_goodreads/top_authors.feather"
+# file = "/home/paul/repos/misc-scraping/misc_scraping/scrape_goodreads/scrape_goodreads/top_authors.feather"
+file = "top_authors.feather"
+
 df = pd.read_feather(file)
 
 class RedisAuthorListSpider(scrapy.Spider):
