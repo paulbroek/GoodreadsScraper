@@ -92,8 +92,8 @@ services:
           --logfile=scrapy.log \
           -a start_page_no=1 \
           -a end_page_no=3 \
-          -a list_name=${LIST_TO_SCRAPE} \
-          -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
+          -a list_name=notused \
+          -s OUTPUT_FILE_SUFFIX=myauthor \
           redis_author_list
 
     volumes:
