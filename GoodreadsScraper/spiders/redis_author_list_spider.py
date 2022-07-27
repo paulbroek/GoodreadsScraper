@@ -25,9 +25,11 @@ with jsonlines.open("author_myauthor.jl") as reader:
 existing_authors = pd.DataFrame(existing_items)
 
 # only keep new authors
-nrow_before = df.shape[0]
-df = df[~df.url.isin(existing_authors.url)]
-print(f"removed {(nrow_before - df.shape[0]):,} rows")
+if not existing_authors.empt:
+    nrow_before = df.shape[0]
+    df = df[~df.url.isin(existing_authors.url)]
+    print(f"removed {(nrow_before - df.shape[0]):,} rows")
+
 assert not df.empty, f"probably all authors have been scraped. implement updating existing authors / books"
 # sort with best authors at top of dataset
 df = df.iloc[-20_000:].sort_values("score", ascending=False)
