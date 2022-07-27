@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
 
+import datetime
 # Define here the models for your scraped items
 #
 # See documentation in:
 # http://doc.scrapy.org/en/latest/topics/items.html
 import re
-import datetime
 
 import scrapy
+from dateutil.parser import parse as dateutil_parse
 from scrapy import Field
 from scrapy.loader import ItemLoader
-
-from scrapy.loader.processors import Identity, Compose, MapCompose, TakeFirst, Join
-
-from dateutil.parser import parse as dateutil_parse
+from scrapy.loader.processors import (Compose, Identity, Join, MapCompose,
+                                      TakeFirst)
 from w3lib.html import remove_tags
 
 
@@ -86,6 +85,10 @@ def isbn13_filter(isbn):
 def filter_empty(vals):
     return [v.strip() for v in vals if v.strip()]
 
+# added by paul
+def remove_more(vals):
+    return vals[:-1] + [vals[-1].strip(" ...more")]
+
 
 def split_by_newline(txt):
     return txt.split("\n")
@@ -98,6 +101,14 @@ class BookItem(scrapy.Item):
     cover_image = Field(input_processor=MapCompose(str.strip)) # added by paul
     title = Field(input_processor=MapCompose(str.strip))
     author = Field(input_processor=MapCompose(str.strip))
+
+    # description = Field(input_processor=MapCompose(str.strip))
+    description = Field(
+        # Take the last match, remove HTML tags, convert to list of lines, remove empty lines, remove the "edit data" prefix
+        input_processor=Compose(TakeFirst(), remove_tags, split_by_newline, filter_empty, remove_more),
+        output_processor=Join()
+    )
+    #  lambda s: s[1:]
 
     num_ratings = Field(input_processor=MapCompose(str.strip, int))
     num_reviews = Field(input_processor=MapCompose(str.strip, int))
@@ -148,7 +159,7 @@ class AuthorItem(scrapy.Item):
     # Blobs
     about = Field(
         # Take the first match, remove HTML tags, convert to list of lines, remove empty lines, remove the "edit data" prefix
-        input_processor=Compose(TakeFirst(), remove_tags, split_by_newline, filter_empty, lambda s: s[1:]),
+        input_processor=Compose(TakeFirst(), remove_tags, split_by_newline, filter_empty, remove_more, lambda s: s[1:]),
         output_processor=Join()
     )
 

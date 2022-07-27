@@ -2,8 +2,9 @@
 
 import scrapy
 
-from .author_spider import AuthorSpider
 from ..items import BookItem, BookLoader
+from .author_spider import AuthorSpider
+
 
 class BookSpider(scrapy.Spider):
     """Extract information from a /book/show type page on Goodreads"""
@@ -26,6 +27,9 @@ class BookSpider(scrapy.Spider):
         loader.add_css("num_reviews", "[itemprop=reviewCount]::attr(content)")
         loader.add_css("avg_rating", "span[itemprop=ratingValue]::text")
         loader.add_css("num_pages", "span[itemprop=numberOfPages]::text")
+
+        # loader.add_css("description", "#description span") # added by paul
+        loader.add_css("description", "div.readable") # added by paul
 
         loader.add_css("language", "div[itemprop=inLanguage]::text")
         loader.add_css('publish_date', 'div.row::text')
