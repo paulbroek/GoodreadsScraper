@@ -25,7 +25,7 @@ with jsonlines.open("author_myauthor.jl") as reader:
 existing_authors = pd.DataFrame(existing_items)
 
 # only keep new authors
-if not existing_authors.empt:
+if not existing_authors.empty:
     nrow_before = df.shape[0]
     df = df[~df.url.isin(existing_authors.url)]
     print(f"removed {(nrow_before - df.shape[0]):,} rows")
