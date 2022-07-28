@@ -4,6 +4,9 @@
 # Ignore logs
 *.log
 
+# Ignore Vim files
+*.vim
+
 # ignore .env 
 *.env
 
