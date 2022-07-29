@@ -75,6 +75,27 @@ services:
     volumes:
       - /home/${USER}/repos/GoodreadsScraper:/mnt_src
 
+  scrape-goodreads-authors:
+    image: scrapy-env
+    container_name: scrape-goodreads-authors
+    # restart: unless-stopped
+    environment:
+      - LIST_TO_SCRAPE=redis_books
+      - OUTPUT_FILE_SUFFIX=redis_books
+      - REDIS_HOST=77.249.149.174
+    command:
+      - /bin/bash
+      - -c
+      - |
+        cd /mnt_src
+        scrapy crawl \
+          --logfile=scrapy.log \
+          -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
+          author
+
+    volumes:
+      - /home/${USER}/repos/GoodreadsScraper:/mnt_src
+
   scrape-goodreads-redis-author:
     image: scrapy-env
     container_name: scrape-goodreads-redis-author
