@@ -31,7 +31,7 @@ to_scrape = psql_session.execute(q).scalars().fetchall()
 
 # and set block = True, so other workers cannot pick them!
 for item in to_scrape:
-    item.block = True
+    item.lock = True
 
 psql_session.commit()
 
