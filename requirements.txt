@@ -33,3 +33,5 @@ zope.interface==5.0.0
 redis
 types-redis
 python-dotenv
+pyarrow
+jsonlines
