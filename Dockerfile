@@ -10,6 +10,8 @@ RUN apt-get update   		            && \
 #ADD ./requirements.txt /requirements.txt
 COPY requirements.txt /tmp
 RUN pip install -r /tmp/requirements.txt
+COPY *.whl /tmp
 # RUN pip install pyarrow
+RUN pip install /tmp/scrape_goodreads-0.0.5-py3-none-any.whl
 
 WORKDIR /src
