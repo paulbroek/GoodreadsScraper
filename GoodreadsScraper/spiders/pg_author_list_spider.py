@@ -6,6 +6,7 @@ import sys
 import scrapy  # type: ignore[import]
 from rarc_utils.sqlalchemy_base import get_session
 from scrape_goodreads.models import AuthorToScrape, psql
+from scrapy.utils.project import get_project_settings
 from sqlalchemy import select
 
 from .book_spider import BookSpider
@@ -14,12 +15,13 @@ GOODREADS_URL_PREFIX = "https://www.goodreads.com"
 
 logger = logging.getLogger(__name__)
 
-# todo: move to docker compose environment variable
-psql.host = "77.249.149.174"
+# or use env variable?
+settings = get_project_settings()
+psql.host = settings.get("POSTGRES_HOST")
 psql_session = get_session(psql)()
 
 # get authors to scrape sorted by last_scraped
-NSCRAPE = 20_000
+NSCRAPE = 10_000
 q = (
     select(AuthorToScrape)
     .where(~AuthorToScrape.lock)

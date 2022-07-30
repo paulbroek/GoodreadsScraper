@@ -21,7 +21,7 @@ NEWSPIDER_MODULE = 'GoodreadsScraper.spiders'
 #USER_AGENT = 'GoodreadsScraper (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 POSTGRES_HOST = "77.249.149.174"
 

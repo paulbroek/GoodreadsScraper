@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  scrape-goodreads-pg-author:
+    image: scrapy-env
+    container_name: scrape-goodreads-pg-author
+    # restart: unless-stopped
+    environment:
+      - LIST_TO_SCRAPE=all_author_books
+      - OUTPUT_FILE_SUFFIX=all_author_books
+      - REDIS_HOST=77.249.149.174
+    command:
+      - /bin/bash
+      - -c
+      - |
+        cd /mnt_src
+        scrapy crawl \
+          --logfile=scrapy.log \
+          -a start_page_no=1 \
+          -a end_page_no=3 \
+          -a list_name=notused \
+          -s OUTPUT_FILE_SUFFIX=myauthor \
+          pg_author_list
+
+    volumes:
+      - /home/${USER}/repos/GoodreadsScraper:/mnt_src
