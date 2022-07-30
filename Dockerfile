@@ -14,5 +14,6 @@ COPY scrape_goodreads-0.0.5-py2.py3-none-any.whl /tmp
 RUN pip install git+https://git@github.com/paulbroek/rarc-utils.git 
 RUN pip install /tmp/scrape_goodreads-0.0.5-py2.py3-none-any.whl
 RUN pip install requests
+RUN pip install psycopg2
 
 WORKDIR /src

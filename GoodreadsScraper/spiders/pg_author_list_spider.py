@@ -58,7 +58,7 @@ class PgAuthorListSpider(scrapy.Spider):
 
         self.start_urls = []
 
-        self.authors = to_scrape
+        self.authors = [i.id for i in to_scrape]
         print(f"{len(self.authors)=}")
         for author in self.authors:
             for page_no in range(int(start_page_no), int(end_page_no) + 1):
