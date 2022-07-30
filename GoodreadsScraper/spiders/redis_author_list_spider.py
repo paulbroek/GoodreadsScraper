@@ -56,6 +56,7 @@ class RedisAuthorListSpider(scrapy.Spider):
     goodreads_list_url = "https://www.goodreads.com/author/list/{}?page={}"
 
     def __init__(self, list_name, start_page_no, end_page_no):
+        global authors
         super().__init__()
         self.book_spider = BookSpider()
 
