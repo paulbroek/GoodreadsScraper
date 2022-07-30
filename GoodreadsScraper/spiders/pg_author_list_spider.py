@@ -1,13 +1,10 @@
-"""Spider to extract all books for author_to_scrape items from PostgreSQL"""
+"""Spider to extract all books for author_to_scrape items from PostgreSQL."""
 
 import logging
-import os.path
+import sys
 
-import jsonlines
-import pandas as pd
-import scrapy
-from rarc_utils.sqlalchemy_base import (create_many, get_async_session,
-                                        get_session)
+import scrapy  # type: ignore[import]
+from rarc_utils.sqlalchemy_base import get_session
 from scrape_goodreads.models import AuthorToScrape, psql
 from sqlalchemy import select
 
@@ -36,8 +33,17 @@ for item in to_scrape:
     item.lock = True
 
 psql_session.commit()
+psql_session.close()
 
 logger.info(f"{len(to_scrape)=:,}")
+
+msg = "unset locks of items by running :\n UPDATE author_to_scrape SET lock = False;"
+if 0 < len(to_scrape) < NSCRAPE:
+    logger.warning(f"almost all items have `lock=True` " + msg)
+
+if len(to_scrape) == 0:
+    logger.error("nothing to do, " + msg)
+    sys.exit()
 
 # todo: given structure of scrapy I cannot set item.done = True after succesful scraping. I can however do this later, when all workers finished
 # just run update_author_to_scrape.py

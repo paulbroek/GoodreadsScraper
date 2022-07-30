@@ -1,11 +1,25 @@
 # -*- coding: utf-8 -*-
 
+import logging
+from datetime import datetime
+
+from rarc_utils.sqlalchemy_base import get_session
+from scrape_goodreads.models import AuthorToScrape, psql
 # Define your item pipelines here
 #
+from scrapy import signals
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 from scrapy.exporters import JsonLinesItemExporter
-from scrapy import signals
+from scrapy.utils.project import get_project_settings
+from sqlalchemy import select
+
+logger = logging.getLogger(__name__)
+
+settings = get_project_settings()
+psql.host = settings.get("POSTGRES_HOST")
+psql_session = get_session(psql)()
+logger.info(f"{psql.host=}")
 
 
 class JsonLineItemSegregator(object):
@@ -39,9 +53,26 @@ class JsonLineItemSegregator(object):
         item_type = type(item).__name__.replace("Item", "").lower()
         if item_type in self.types:
             self.exporters[item_type].export_item(item)
+
+        # update AuthorToScrape.lock = False and .last_scraped = now()
+        if item_type == "author":
+
+            # other way: always look look up author_to_scrape, and set lock = False
+            author_id = item["url"].split("show/")[-1]
+            author_to_scrape = psql_session.query(AuthorToScrape).filter_by(id=author_id).one()
+            # logger.info(f"{author_to_scrape=}")
+
+            author_to_scrape.lock = False
+            author_to_scrape.last_scraped = datetime.utcnow()
+            author_to_scrape.nscrape += 1
+            author_to_scrape.nupdate += 1
+            psql_session.commit()
+
+        # todo: also decrement npage when you get rejected request for author page=3 
+
         return item
 
-        # here you can add code for pushing item to postgres..
+# here you can implement code for pushing item to postgres..
 
 class SingleItemSegregator(object):
     """ todo: implement scraping a book based on a book url only """
