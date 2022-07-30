@@ -1,6 +1,7 @@
 """Spider to extract all books for a list of authors."""
 
 import logging
+import os.path
 
 import jsonlines
 import pandas as pd
@@ -13,14 +14,17 @@ GOODREADS_URL_PREFIX = "https://www.goodreads.com"
 logger = logging.getLogger(__name__)
 
 # file = "/home/paul/repos/misc-scraping/misc_scraping/scrape_goodreads/scrape_goodreads/top_authors.feather"
-file = "top_authors.feather"
+# file = "top_authors.feather"
+file = "all_authors.feather"
 
 df = pd.read_feather(file)
 # filter out existing authors
 existing_items = []
-with jsonlines.open("author_myauthor.jl") as reader:
-    for obj in reader:
-        existing_items.append(obj)
+AUTHOR_FILE = "author_myauthor.jl"
+if os.path.isfile(AUTHOR_FILE):
+    with jsonlines.open(AUTHOR_FILE) as reader:
+        for obj in reader:
+            existing_items.append(obj)
 
 existing_authors = pd.DataFrame(existing_items)
 
@@ -32,7 +36,8 @@ if not existing_authors.empty:
 
 assert not df.empty, f"probably all authors have been scraped. implement updating existing authors / books"
 # sort with best authors at top of dataset
-df = df.iloc[-20_000:].sort_values("score", ascending=False)
+# df = df.iloc[-20_000:].sort_values("score", ascending=False)
+# for sitemap author scrape, we do not know anything about authors yet, so no score
 
 class RedisAuthorListSpider(scrapy.Spider):
     """Extract URLs of books from a Listopia list on Goodreads.
