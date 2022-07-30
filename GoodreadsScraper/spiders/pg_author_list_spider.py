@@ -17,6 +17,8 @@ GOODREADS_URL_PREFIX = "https://www.goodreads.com"
 
 logger = logging.getLogger(__name__)
 
+# todo: move to docker compose environment variable
+psql.host = "77.249.149.174"
 psql_session = get_session(psql)()
 
 # get authors to scrape sorted by last_scraped
