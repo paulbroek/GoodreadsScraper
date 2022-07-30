@@ -35,12 +35,15 @@ if not existing_authors.empty:
     print(f"removed {(nrow_before - df.shape[0]):,} rows")
 
 authors = df.url.str.split('show/').apply(lambda x: x[-1]).to_list()
-del existing_authors, df
 
 assert not df.empty, f"probably all authors have been scraped. implement updating existing authors / books"
+
+del existing_authors, df
 # sort with best authors at top of dataset
 # df = df.iloc[-20_000:].sort_values("score", ascending=False)
 # for sitemap author scrape, we do not know anything about authors yet, so no score
+
+# todo: use redis or any distributed system to scale the scraper, get batches of items to scrape from a central organ
 
 class RedisAuthorListSpider(scrapy.Spider):
     """Extract URLs of books from a Listopia list on Goodreads.
