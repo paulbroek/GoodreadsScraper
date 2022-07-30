@@ -43,15 +43,13 @@ del existing_authors, df
 # df = df.iloc[-20_000:].sort_values("score", ascending=False)
 # for sitemap author scrape, we do not know anything about authors yet, so no score
 
-# todo: use redis or any distributed system to scale the scraper, get batches of items to scrape from a central organ
-
-class RedisAuthorListSpider(scrapy.Spider):
+class FeatherAuthorListSpider(scrapy.Spider):
     """Extract URLs of books from a Listopia list on Goodreads.
 
     This subsequently passes on the URLs to BookSpider
     """
 
-    name = "redis_author_list"
+    name = "feather_author_list"
 
     goodreads_list_url = "https://www.goodreads.com/author/list/{}?page={}"
 
