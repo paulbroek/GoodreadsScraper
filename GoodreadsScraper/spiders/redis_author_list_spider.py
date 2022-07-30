@@ -34,7 +34,8 @@ if not existing_authors.empty:
     df = df[~df.url.isin(existing_authors.url)]
     print(f"removed {(nrow_before - df.shape[0]):,} rows")
 
-del existing_authors
+authors = df.url.str.split('show/').apply(lambda x: x[-1]).to_list()
+del existing_authors, df
 
 assert not df.empty, f"probably all authors have been scraped. implement updating existing authors / books"
 # sort with best authors at top of dataset
@@ -53,18 +54,18 @@ class RedisAuthorListSpider(scrapy.Spider):
 
     def __init__(self, list_name, start_page_no, end_page_no):
         super().__init__()
-        global df
         self.book_spider = BookSpider()
 
         self.start_urls = []
 
-        self.authors = df.url.str.split('show/').apply(lambda x: x[-1]).to_list()
-        del df
+        self.authors = authors
         print(f"{len(self.authors)=}")
         for author in self.authors:
             for page_no in range(int(start_page_no), int(end_page_no) + 1):
                 list_url = self.goodreads_list_url.format(author, page_no)
                 self.start_urls.append(list_url)
+
+        del self.authors, authors
 
     def parse(self, response):
         list_of_books = response.css("a.bookTitle::attr(href)").extract()
