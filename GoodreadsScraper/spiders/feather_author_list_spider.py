@@ -13,32 +13,37 @@ GOODREADS_URL_PREFIX = "https://www.goodreads.com"
 
 logger = logging.getLogger(__name__)
 
-# file = "/home/paul/repos/misc-scraping/misc_scraping/scrape_goodreads/scrape_goodreads/top_authors.feather"
-# file = "top_authors.feather"
-file = "all_authors.feather"
+def diff_with_feather_file():
 
-df = pd.read_feather(file)
-# filter out existing authors
-existing_items = []
-AUTHOR_FILE = "author_myauthor.jl"
-if os.path.isfile(AUTHOR_FILE):
-    with jsonlines.open(AUTHOR_FILE) as reader:
-        for obj in reader:
-            existing_items.append(obj)
+    # file = "/home/paul/repos/misc-scraping/misc_scraping/scrape_goodreads/scrape_goodreads/top_authors.feather"
+    # file = "top_authors.feather"
+    file = "all_authors.feather"
 
-existing_authors = pd.DataFrame(existing_items)
+    df = pd.read_feather(file)
+    # filter out existing authors
+    existing_items = []
+    AUTHOR_FILE = "author_myauthor.jl"
+    if os.path.isfile(AUTHOR_FILE):
+        with jsonlines.open(AUTHOR_FILE) as reader:
+            for obj in reader:
+                existing_items.append(obj)
 
-# only keep new authors
-if not existing_authors.empty:
-    nrow_before = df.shape[0]
-    df = df[~df.url.isin(existing_authors.url)]
-    print(f"removed {(nrow_before - df.shape[0]):,} rows")
+    existing_authors = pd.DataFrame(existing_items)
 
-authors = df.url.str.split('show/').apply(lambda x: x[-1]).to_list()
+    # only keep new authors
+    if not existing_authors.empty:
+        nrow_before = df.shape[0]
+        df = df[~df.url.isin(existing_authors.url)]
+        print(f"removed {(nrow_before - df.shape[0]):,} rows")
 
-assert not df.empty, f"probably all authors have been scraped. implement updating existing authors / books"
+    authors = df.url.str.split('show/').apply(lambda x: x[-1]).to_list()
 
-del existing_authors, df
+    assert not df.empty, f"probably all authors have been scraped. implement updating existing authors / books"
+
+    del existing_authors, df
+
+    return authors
+
 # sort with best authors at top of dataset
 # df = df.iloc[-20_000:].sort_values("score", ascending=False)
 # for sitemap author scrape, we do not know anything about authors yet, so no score
@@ -54,13 +59,13 @@ class FeatherAuthorListSpider(scrapy.Spider):
     goodreads_list_url = "https://www.goodreads.com/author/list/{}?page={}"
 
     def __init__(self, list_name, start_page_no, end_page_no):
-        global authors
+        # global authors
         super().__init__()
         self.book_spider = BookSpider()
 
         self.start_urls = []
 
-        self.authors = authors
+        self.authors = diff_with_feather_file()
         print(f"{len(self.authors)=}")
         for author in self.authors:
             for page_no in range(int(start_page_no), int(end_page_no) + 1):
