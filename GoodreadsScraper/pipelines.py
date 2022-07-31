@@ -59,14 +59,19 @@ class JsonLineItemSegregator(object):
 
             # other way: always look look up author_to_scrape, and set lock = False
             author_id = item["url"].split("show/")[-1]
-            author_to_scrape = psql_session.query(AuthorToScrape).filter_by(id=author_id).one()
-            # logger.info(f"{author_to_scrape=}")
+            author_to_scrape = psql_session.query(AuthorToScrape).filter_by(id=author_id).one_or_none()
 
-            author_to_scrape.lock = False
-            author_to_scrape.last_scraped = datetime.utcnow()
-            author_to_scrape.nscrape += 1
-            author_to_scrape.nupdate += 1
-            psql_session.commit()
+            if author_to_scrape is None:
+                logger.warning(f"could not find {author_id=}, not updating AuthorToScrape in db")
+
+            else:            
+                # logger.info(f"{author_to_scrape=}")
+
+                author_to_scrape.lock = False
+                author_to_scrape.last_scraped = datetime.utcnow()
+                author_to_scrape.nscrape += 1
+                author_to_scrape.nupdate += 1
+                psql_session.commit()
 
         # todo: also decrement npage when you get rejected request for author page=3 
 
