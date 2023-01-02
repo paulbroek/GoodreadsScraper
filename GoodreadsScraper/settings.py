@@ -23,7 +23,8 @@ NEWSPIDER_MODULE = 'GoodreadsScraper.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
-POSTGRES_HOST = "77.249.149.174"
+# POSTGRES_HOST = "77.249.149.174"
+POSTGRES_HOST = "127.0.0.1"
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
