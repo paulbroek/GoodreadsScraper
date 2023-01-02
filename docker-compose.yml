@@ -58,6 +58,7 @@ services:
     image: scrapy-env
     container_name: scrape-goodreads-redis
     # restart: unless-stopped
+    network_mode: host
     environment:
       - LIST_TO_SCRAPE=redis_books
       - OUTPUT_FILE_SUFFIX=redis_books
