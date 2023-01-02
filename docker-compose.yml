@@ -61,7 +61,10 @@ services:
     environment:
       - LIST_TO_SCRAPE=redis_books
       - OUTPUT_FILE_SUFFIX=redis_books
-      - REDIS_HOST=213.93.184.218
+      # - REDIS_HOST=213.93.184.218
+      - REDIS_HOST=127.0.0.1
+      - REDIS_PORT=6382
+      # - REDIS_PORT=6382
     command:
       - /bin/bash
       - -c
@@ -82,7 +85,10 @@ services:
     environment:
       - LIST_TO_SCRAPE=all_author_books
       - OUTPUT_FILE_SUFFIX=all_author_books
-      - REDIS_HOST=213.93.184.218
+      # - REDIS_HOST=213.93.184.218
+      - REDIS_HOST=127.0.0.1
+      - REDIS_PORT=6382
+      # - REDIS_PORT=6382
     command:
       - /bin/bash
       - -c
