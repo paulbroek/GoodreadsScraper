@@ -24,9 +24,9 @@ NEWSPIDER_MODULE = 'GoodreadsScraper.spiders'
 ROBOTSTXT_OBEY = False
 
 # POSTGRES_HOST = "77.249.149.174"
-POSTGRES_HOST = "127.0.0.1"
-# POSTGRES_PORT = 5432
-POSTGRES_PORT = 5439
+POSTGRES_HOST = "postgres-goodreads-master"
+POSTGRES_PORT = 5432
+# POSTGRES_PORT = 5439
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
