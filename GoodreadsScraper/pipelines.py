@@ -18,6 +18,7 @@ logger = logging.getLogger(__name__)
 
 settings = get_project_settings()
 psql.host = settings.get("POSTGRES_HOST")
+psql.port = settings.get("POSTGRES_PORT")
 psql_session = get_session(psql)()
 logger.info(f"{psql.host=}")
 
