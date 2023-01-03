@@ -67,6 +67,7 @@ services:
       # - REDIS_PORT=6382
       # - REDIS_DB=4
       # - REDIS_PORT=6382
+      # - POSTGRES_PORT=5432
     command:
       - /bin/bash
       - -c

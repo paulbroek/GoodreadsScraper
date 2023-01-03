@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import os
 from datetime import datetime
 
 from rarc_utils.sqlalchemy_base import get_session
@@ -18,7 +19,8 @@ logger = logging.getLogger(__name__)
 
 settings = get_project_settings()
 psql.host = settings.get("POSTGRES_HOST")
-psql.port = settings.get("POSTGRES_PORT")
+# psql.port = settings.get("POSTGRES_PORT")
+psql.port = os.environ.get("POSTGRES_PORT")
 psql_session = get_session(psql)()
 logger.info(f"{psql.host=}")
 
@@ -37,8 +39,13 @@ class JsonLineItemSegregator(object):
         crawler.signals.connect(self.spider_closed, signal=signals.spider_closed)
 
     def spider_opened(self, spider):
-        self.files = {name: open(name + "_" + self.output_file_suffix + '.jl', 'a+b') for name in self.types}
-        self.exporters = {name: JsonLinesItemExporter(self.files[name]) for name in self.types}
+        self.files = {
+            name: open(name + "_" + self.output_file_suffix + ".jl", "a+b")
+            for name in self.types
+        }
+        self.exporters = {
+            name: JsonLinesItemExporter(self.files[name]) for name in self.types
+        }
 
         for e in self.exporters.values():
             e.start_exporting()
@@ -60,12 +67,16 @@ class JsonLineItemSegregator(object):
 
             # other way: always look look up author_to_scrape, and set lock = False
             author_id = item["url"].split("show/")[-1]
-            author_to_scrape = psql_session.query(AuthorToScrape).filter_by(id=author_id).one_or_none()
+            author_to_scrape = (
+                psql_session.query(AuthorToScrape).filter_by(id=author_id).one_or_none()
+            )
 
             if author_to_scrape is None:
-                logger.warning(f"could not find {author_id=}, not updating AuthorToScrape in db")
+                logger.warning(
+                    f"could not find {author_id=}, not updating AuthorToScrape in db"
+                )
 
-            else:            
+            else:
                 # logger.info(f"{author_to_scrape=}")
 
                 author_to_scrape.lock = False
@@ -74,13 +85,15 @@ class JsonLineItemSegregator(object):
                 author_to_scrape.nupdate += 1
                 psql_session.commit()
 
-        # todo: also decrement npage when you get rejected request for author page=3 
+        # todo: also decrement npage when you get rejected request for author page=3
 
         return item
 
+
 # here you can implement code for pushing item to postgres..
 
+
 class SingleItemSegregator(object):
-    """ todo: implement scraping a book based on a book url only """
+    """todo: implement scraping a book based on a book url only"""
 
     pass
