@@ -19,11 +19,12 @@ logger = logging.getLogger(__name__)
 
 settings = get_project_settings()
 UPDATE_POSTGRES_PER_ITEM = settings.get("UPDATE_POSTGRES_PER_ITEM")
-psql.host = settings.get("POSTGRES_HOST")
-# psql.port = settings.get("POSTGRES_PORT")
-psql.port = os.environ.get("POSTGRES_PORT")
-psql_session = get_session(psql)()
-logger.info(f"{psql.host=}")
+
+if UPDATE_POSTGRES_PER_ITEM:
+    psql.host = settings.get("POSTGRES_HOST")
+    psql.port = os.environ.get("POSTGRES_PORT")
+    psql_session = get_session(psql)()
+    logger.info(f"{psql.host=}")
 
 
 class JsonLineItemSegregator(object):

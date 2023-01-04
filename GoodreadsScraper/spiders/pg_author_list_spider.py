@@ -15,29 +15,36 @@ GOODREADS_URL_PREFIX = "https://www.goodreads.com"
 
 logger = logging.getLogger(__name__)
 
+UPDATE_POSTGRES_PER_ITEM = settings.get("UPDATE_POSTGRES_PER_ITEM")
+
 # or use env variable?
 settings = get_project_settings()
 psql.host = settings.get("POSTGRES_HOST")
 psql.port = settings.get("POSTGRES_PORT")
-psql_session = get_session(psql)()
 
-# get authors to scrape sorted by last_scraped
-NSCRAPE = 10_000
-q = (
-    select(AuthorToScrape)
-    .where(~AuthorToScrape.lock)
-    .order_by(AuthorToScrape.last_scraped.desc())
-    .limit(NSCRAPE)
-)
-# to_scrape = psql_session.execute(q).scalars().fetchall()
-to_scrape = []
+if UPDATE_POSTGRES_PER_ITEM:
+    psql_session = get_session(psql)()
 
-# and set block = True, so other workers cannot pick them!
-# for item in to_scrape:
+    # get authors to scrape sorted by last_scraped
+    NSCRAPE = 10_000
+    q = (
+        select(AuthorToScrape)
+        .where(~AuthorToScrape.lock)
+        .order_by(AuthorToScrape.last_scraped.desc())
+        .limit(NSCRAPE)
+    )
+    to_scrape = psql_session.execute(q).scalars().fetchall()
+
+    # and set block = True, so other workers cannot pick them!
+    # for item in to_scrape:
     # item.lock = True
 
-# psql_session.commit()
-# psql_session.close()
+    # psql_session.commit()
+    # psql_session.close()
+
+else:
+    to_scrape = []
+
 
 logger.info(f"{len(to_scrape)=:,}")
 
