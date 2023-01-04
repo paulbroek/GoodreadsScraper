@@ -29,14 +29,15 @@ q = (
     .order_by(AuthorToScrape.last_scraped.desc())
     .limit(NSCRAPE)
 )
-to_scrape = psql_session.execute(q).scalars().fetchall()
+# to_scrape = psql_session.execute(q).scalars().fetchall()
+to_scrape = []
 
 # and set block = True, so other workers cannot pick them!
-for item in to_scrape:
-    item.lock = True
+# for item in to_scrape:
+    # item.lock = True
 
-psql_session.commit()
-psql_session.close()
+# psql_session.commit()
+# psql_session.close()
 
 logger.info(f"{len(to_scrape)=:,}")
 
