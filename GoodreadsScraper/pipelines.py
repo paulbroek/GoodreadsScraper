@@ -18,6 +18,7 @@ from sqlalchemy import select
 logger = logging.getLogger(__name__)
 
 settings = get_project_settings()
+UPDATE_POSTGRES_PER_ITEM = settings.get("UPDATE_POSTGRES_PER_ITEM")
 psql.host = settings.get("POSTGRES_HOST")
 # psql.port = settings.get("POSTGRES_PORT")
 psql.port = os.environ.get("POSTGRES_PORT")
@@ -63,7 +64,7 @@ class JsonLineItemSegregator(object):
             self.exporters[item_type].export_item(item)
 
         # update AuthorToScrape.lock = False and .last_scraped = now()
-        if item_type == "author":
+        if UPDATE_POSTGRES_PER_ITEM and item_type == "author":
 
             # other way: always look look up author_to_scrape, and set lock = False
             author_id = item["url"].split("show/")[-1]

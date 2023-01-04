@@ -29,6 +29,11 @@ POSTGRES_HOST = "127.0.0.1"
 # POSTGRES_PORT = 5432
 # POSTGRES_PORT = 5439
 
+# update postgres when author item is scraped. Caution: very slow if query is
+# not optimized
+UPDATE_POSTGRES_PER_ITEM = False
+# UPDATE_POSTGRES_PER_ITEM = True
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
