@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 
 settings = get_project_settings()
 UPDATE_POSTGRES_PER_ITEM = settings.get("UPDATE_POSTGRES_PER_ITEM")
+EXIT_ON_ZERO_TODO = settings.get("EXIT_ON_ZERO_TODO")
 
 # or use env variable?
 settings = get_project_settings()
@@ -53,7 +54,7 @@ msg = "unset locks of items by running :\n UPDATE author_to_scrape SET lock = Fa
 if 0 < len(to_scrape) < NSCRAPE:
     logger.warning(f"almost all items have `lock=True` " + msg)
 
-if len(to_scrape) == 0:
+if EXIT_ON_ZERO_TODO and len(to_scrape) == 0:
     logger.error("nothing to do, " + msg)
     sys.exit()
 

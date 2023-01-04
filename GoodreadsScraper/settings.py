@@ -33,6 +33,8 @@ POSTGRES_HOST = "127.0.0.1"
 # not optimized
 UPDATE_POSTGRES_PER_ITEM = False
 # UPDATE_POSTGRES_PER_ITEM = True
+# EXIT_ON_ZERO_TODO = True
+EXIT_ON_ZERO_TODO = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
