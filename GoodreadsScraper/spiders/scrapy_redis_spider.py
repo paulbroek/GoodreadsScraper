@@ -9,7 +9,6 @@ GOODREADS_URL_PREFIX = "https://www.goodreads.com"
 logger = logging.getLogger(__name__)
 
 
-# class MySpider(RedisSpider, BookSpider):
 class MySpider(RedisSpider, BookSpider):
     """Spider that reads urls from redis queue (myspider:start_urls).
 
@@ -41,29 +40,5 @@ class MySpider(RedisSpider, BookSpider):
     #     }
 
     def parse(self, response):
-        # yield response.follow(book, callback=self.book_spider.parse)
-        # logger.info(f"self.parse: {self.parse}")
-
-        # return {"url": response.url}
-        # return self.book_spider.parse(response.url)
-        # logger.info(f"{type(response)=}")
         # yield response.follow(response.url, callback=self.book_spider.parse)
         yield response.follow(response.url, callback=self.book_parser)
-        # yield response.follow(response.url, callback=self.parse)
-
-    # def parse(self, response):
-    #     # list_of_books = response.css("a.bookTitle::attr(href)").extract()
-
-    #     # manual input override. don't know other way for now
-    #     # list_of_books = ["/book/show/16085481-crazy-rich-asians", "/book/show/199519.The_Tibetan_Yogas_Of_Dream_And_Sleep", "/book/show/50512348-the-message-game"]
-    #     # or listen for books through redis
-    #     list_of_books = self.redis_generator()
-    #     # logger.info(f"{len(list_of_books)=}")
-
-    #     while True:
-
-    #         for book in list_of_books:
-    #             logger.info(f"yielding {book=}")
-
-    #         logging.info(f"sleeping {REDIS_FETCH_INTERVAL} seconds")
-    #         sleep(REDIS_FETCH_INTERVAL)
