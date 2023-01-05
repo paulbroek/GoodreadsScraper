@@ -57,7 +57,7 @@ class RedisSpider(scrapy.Spider):
         #     self.start_urls.append(list_url)
 
     def redis_generator(self):
-        # todo: use pubsub, so you don't have to sleep
+        # TODO: use pubsub or sorted sets, so you don't have to sleep
         items = self.redis.lrange(REDIS_TO_SCRAPE_KEY, 0, -1)
         logger.info(f"{self.redis.keys('*')=}")
         logger.info(f"got {len(items)} items from redis")
