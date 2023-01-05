@@ -59,11 +59,6 @@ class RedisSpider(scrapy.Spider):
         #     list_url = self.goodreads_list_url.format(list_name, page_no)
         #     self.start_urls.append(list_url)
 
-    # def start_requests(self):
-    #     return [scrapy.FormRequest("http://www.example.com/login",
-    #                                formdata={'user': 'john', 'pass': 'secret'},
-    #                                callback=self.logged_in)]
-
     def redis_generator(self):
         # TODO: use pubsub or sorted sets, so you don't have to sleep
         items = self.redis.lrange(REDIS_TO_SCRAPE_KEY, 0, -1)
