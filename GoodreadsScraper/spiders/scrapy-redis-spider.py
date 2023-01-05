@@ -1,5 +1,7 @@
 from scrapy_redis.spiders import RedisSpider
 
+from .book_spider import BookSpider
+
 
 class MySpider(RedisSpider):
     """Spider that reads urls from redis queue (myspider:start_urls).
@@ -16,6 +18,8 @@ class MySpider(RedisSpider):
         domain = kwargs.pop("domain", "")
         self.allowed_domains = filter(None, domain.split(","))
         super(MySpider, self).__init__(*args, **kwargs)
+
+        self.book_spider = BookSpider()
 
     # def parse(self, response):
     #     return {
