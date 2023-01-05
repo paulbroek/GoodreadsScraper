@@ -25,7 +25,7 @@ class MySpider(RedisSpider, BookSpider):
         # domain = kwargs.pop("domain", "")
         domain = "www.goodreads.com"
         self.allowed_domains = filter(None, domain.split(","))
-        super(MySpider, self).__init__(*args, **kwargs)
+        super(MySpider, BookSpider, self).__init__(*args, **kwargs)
         # super().__init__(*args, **kwargs)
 
         # self.book_spider = BookSpider()
