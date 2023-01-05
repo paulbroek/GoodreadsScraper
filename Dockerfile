@@ -13,9 +13,7 @@ RUN pip install -r /tmp/requirements.txt
 COPY scrape_goodreads-0.0.5-py2.py3-none-any.whl /tmp
 RUN pip install git+https://git@github.com/paulbroek/rarc-utils.git 
 RUN pip install /tmp/scrape_goodreads-0.0.5-py2.py3-none-any.whl
-# RUN pip install requests
-# RUN pip install psycopg2
-# RUN pip install -U Scrapy
+
 RUN pip install git+https://github.com/rmax/scrapy-redis
 
 WORKDIR /src
