@@ -29,6 +29,8 @@ class MySpider(RedisSpider, BookSpider):
         super(MySpider, self).__init__(*args, **kwargs)
 
         self.book_spider = BookSpider()
+        self.book_parser = self.book_spider.parse
+        self.author_parser = self.book_spider.author_spider.parse
 
         self.start_urls = [GOODREADS_URL_PREFIX]
 
@@ -44,9 +46,10 @@ class MySpider(RedisSpider, BookSpider):
 
         # return {"url": response.url}
         # return self.book_spider.parse(response.url)
-        logger.info(f"{type(response)=}")
+        # logger.info(f"{type(response)=}")
         # yield response.follow(response.url, callback=self.book_spider.parse)
-        yield response.follow(response.url, callback=self.parse)
+        yield response.follow(response.url, callback=self.book_parser)
+        # yield response.follow(response.url, callback=self.parse)
 
     # def parse(self, response):
     #     # list_of_books = response.css("a.bookTitle::attr(href)").extract()

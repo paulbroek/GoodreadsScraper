@@ -13,6 +13,7 @@ class BookSpider(scrapy.Spider):
     def __init__(self):
         super().__init__()
         self.author_spider = AuthorSpider()
+        self.author_parser = self.author_spider.parse
 
     def parse(self, response):
         loader = BookLoader(BookItem(), response=response)
@@ -56,4 +57,5 @@ class BookSpider(scrapy.Spider):
         yield loader.load_item()
 
         author_url = response.css('a.authorName::attr(href)').extract_first()
-        yield response.follow(author_url, callback=self.author_spider.parse)
+        # yield response.follow(author_url, callback=self.author_spider.parse)
+        yield response.follow(author_url, callback=self.author_parser)
