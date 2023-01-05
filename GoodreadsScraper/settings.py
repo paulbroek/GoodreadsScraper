@@ -29,6 +29,16 @@ POSTGRES_HOST = "127.0.0.1"
 # POSTGRES_PORT = 5432
 # POSTGRES_PORT = 5439
 
+# scrapy-redis settings
+USER_AGENT = 'scrapy-redis (+https://github.com/rolando/scrapy-redis)'
+
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+SCHEDULER_PERSIST = True
+# SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.SpiderPriorityQueue"
+# SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.SpiderQueue"
+# SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.SpiderStack"
+
 # update postgres when author item is scraped. Caution: very slow if query is
 # not optimized
 UPDATE_POSTGRES_PER_ITEM = False
@@ -80,7 +90,7 @@ DOWNLOAD_DELAY = 1
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'GoodreadsScraper.pipelines.JsonLineItemSegregator': 300,
+    # 'GoodreadsScraper.pipelines.JsonLineItemSegregator': 300,
     'scrapy_redis.pipelines.RedisPipeline': 400,
 }
 

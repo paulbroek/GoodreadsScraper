@@ -76,7 +76,8 @@ services:
         scrapy crawl \
           --logfile=scrapy.log \
           -s OUTPUT_FILE_SUFFIX=${LIST_TO_SCRAPE} \
-          redis
+          myspider_redis
+          # redis
 
     volumes:
       - /home/${USER}/repos/GoodreadsScraper:/mnt_src

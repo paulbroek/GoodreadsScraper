@@ -22,6 +22,8 @@ logger = logging.getLogger(__name__)
 
 REDIS_FETCH_INTERVAL = 3
 
+# TODO: depreciated, should be replaced by `scrapy-redis-spider.py`
+
 
 class RedisSpider(scrapy.Spider):
     """Extract URLs of books from a Listopia list on Goodreads.
