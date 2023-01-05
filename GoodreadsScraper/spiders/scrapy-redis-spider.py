@@ -22,8 +22,8 @@ class MySpider(RedisSpider, scrapy.Spider):
         # domain = kwargs.pop("domain", "")
         domain = "www.goodreads.com"
         self.allowed_domains = filter(None, domain.split(","))
-        # super(MySpider, self).__init__(*args, **kwargs)
-        super().__init__(*args, **kwargs)
+        super(MySpider, self).__init__(*args, **kwargs)
+        # super().__init__(*args, **kwargs)
 
         self.book_spider = BookSpider()
 
