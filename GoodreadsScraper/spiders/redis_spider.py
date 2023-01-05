@@ -100,4 +100,4 @@ class RedisSpider(scrapy.Spider):
                 yield response.follow(book, callback=self.book_spider.parse)
 
             logging.info(f"sleeping {REDIS_FETCH_INTERVAL} seconds")
-            sleep(REDIS_FETCH_INTERVAL=3)
+            sleep(REDIS_FETCH_INTERVAL)
