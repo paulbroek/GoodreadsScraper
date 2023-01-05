@@ -23,11 +23,8 @@ NEWSPIDER_MODULE = 'GoodreadsScraper.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 
-# POSTGRES_HOST = "77.249.149.174"
-# POSTGRES_HOST = "postgres-goodreads-master"
 POSTGRES_HOST = "127.0.0.1"
 # POSTGRES_PORT = 5432
-# POSTGRES_PORT = 5439
 
 # scrapy-redis settings
 USER_AGENT = 'scrapy-redis (+https://github.com/rolando/scrapy-redis)'
@@ -38,6 +35,10 @@ SCHEDULER_PERSIST = True
 # SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.SpiderPriorityQueue"
 # SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.SpiderQueue"
 # SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.SpiderStack"
+REDIS_PARAMS = {
+    "REDIS_HOST": "81.169.252.73",
+    "REDIS_PORT" : 6382
+}
 
 # update postgres when author item is scraped. Caution: very slow if query is
 # not optimized
