@@ -38,7 +38,7 @@ SCHEDULER_PERSIST = True
 REDIS_PARAMS = {
     # "REDIS_HOST": "81.169.252.73",
     # "REDIS_PORT" : 6382
-    "url": "81.169.252.73:6382"
+    "url": "redis://81.169.252.73:6382"
 }
 
 # update postgres when author item is scraped. Caution: very slow if query is
