@@ -19,7 +19,7 @@ class MySpider(RedisSpider):
         # Dynamically define the allowed domains list.
         # TODO: use dynamically domains list, see scrapy-redis docs / source code?
         # domain = kwargs.pop("domain", "")
-        domain = ["www.goodreads.com"]
+        domain = "www.goodreads.com"
         self.allowed_domains = filter(None, domain.split(","))
         super(MySpider, self).__init__(*args, **kwargs)
 
