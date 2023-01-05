@@ -36,9 +36,10 @@ class MySpider(RedisSpider):
 
     def parse(self, response):
         # TODO: remove later
-        book = "book/show/28830329-learning-scrapy"
-        yield response.follow(book, callback=self.book_spider.parse)
-        # yield response.follow(response.url, callback=self.book_spider.parse)
+        # book = "book/show/28830329-learning-scrapy"
+        book_spider = BookSpider()
+        # yield response.follow(book, callback=self.book_spider.parse)
+        yield response.follow(response.url, callback=self.book_spider.parse)
 
     # def parse(self, response):
     #     # list_of_books = response.css("a.bookTitle::attr(href)").extract()
