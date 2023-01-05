@@ -36,8 +36,9 @@ SCHEDULER_PERSIST = True
 # SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.SpiderQueue"
 # SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.SpiderStack"
 REDIS_PARAMS = {
-    "REDIS_HOST": "81.169.252.73",
-    "REDIS_PORT" : 6382
+    # "REDIS_HOST": "81.169.252.73",
+    # "REDIS_PORT" : 6382
+    "url": "81.169.252.73:6382"
 }
 
 # update postgres when author item is scraped. Caution: very slow if query is
