@@ -92,7 +92,8 @@ class JsonLineItemSegregator(object):
         return item
 
 
-# here you can implement code for pushing item to postgres..
+# TODO: here you can implement code for pushing item to redis queue..
+class RedisItemssegregator
 
 
 class SingleItemSegregator(object):
