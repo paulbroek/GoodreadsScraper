@@ -3,6 +3,7 @@
 import logging
 import os
 from os.path import dirname, join
+from time import sleep
 
 import redis
 import scrapy
@@ -18,6 +19,8 @@ dotenv_path = join(dirname(__file__), ".env")
 load_dotenv(dotenv_path)
 
 logger = logging.getLogger(__name__)
+
+REDIS_FETCH_INTERVAL = 3
 
 
 class RedisSpider(scrapy.Spider):
@@ -56,6 +59,11 @@ class RedisSpider(scrapy.Spider):
         #     list_url = self.goodreads_list_url.format(list_name, page_no)
         #     self.start_urls.append(list_url)
 
+    # def start_requests(self):
+    #     return [scrapy.FormRequest("http://www.example.com/login",
+    #                                formdata={'user': 'john', 'pass': 'secret'},
+    #                                callback=self.logged_in)]
+
     def redis_generator(self):
         # TODO: use pubsub or sorted sets, so you don't have to sleep
         items = self.redis.lrange(REDIS_TO_SCRAPE_KEY, 0, -1)
@@ -85,6 +93,11 @@ class RedisSpider(scrapy.Spider):
         list_of_books = self.redis_generator()
         # logger.info(f"{len(list_of_books)=}")
 
-        for book in list_of_books:
-            logger.info(f"yielding {book=}")
-            yield response.follow(book, callback=self.book_spider.parse)
+        while True:
+
+            for book in list_of_books:
+                logger.info(f"yielding {book=}")
+                yield response.follow(book, callback=self.book_spider.parse)
+
+            logging.info(f"sleeping {REDIS_FETCH_INTERVAL} seconds")
+            sleep(REDIS_FETCH_INTERVAL=3)
