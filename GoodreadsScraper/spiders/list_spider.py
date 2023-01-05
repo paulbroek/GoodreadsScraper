@@ -1,6 +1,7 @@
 """Spider to extract URL's of books from a Listopia list on Goodreads"""
 
 import logging
+
 import scrapy
 
 from .book_spider import BookSpider
