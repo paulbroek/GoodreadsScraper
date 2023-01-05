@@ -3,7 +3,6 @@
 import logging
 import os
 from os.path import dirname, join
-from time import sleep
 
 import redis
 import scrapy
@@ -20,20 +19,16 @@ load_dotenv(dotenv_path)
 
 logger = logging.getLogger(__name__)
 
-REDIS_FETCH_INTERVAL = 3
-
 # TODO: depreciated, should be replaced by `scrapy-redis-spider.py`
 
 
 class RedisSpider(scrapy.Spider):
-    """Extract URLs of books from a Listopia list on Goodreads.
+    """Extract URLs of books from a redis list
 
-    This subsequently passes on the URLs to BookSpider
+    Subsequently passes on the URLs to BookSpider
     """
 
     name = "redis"
-
-    goodreads_list_url = "https://www.goodreads.com/list/show/{}?page={}"
 
     def __init__(self):
         super().__init__()
@@ -55,11 +50,6 @@ class RedisSpider(scrapy.Spider):
         # spiders need some sort of start_url?
         self.start_urls = [GOODREADS_URL_PREFIX]
         # or use some dummy page
-
-        # self.start_urls = []
-        # for page_no in range(int(start_page_no), int(end_page_no) + 1):
-        #     list_url = self.goodreads_list_url.format(list_name, page_no)
-        #     self.start_urls.append(list_url)
 
     def redis_generator(self):
         # TODO: use pubsub or sorted sets, so you don't have to sleep
@@ -90,11 +80,6 @@ class RedisSpider(scrapy.Spider):
         list_of_books = self.redis_generator()
         # logger.info(f"{len(list_of_books)=}")
 
-        while True:
-
-            for book in list_of_books:
-                logger.info(f"yielding {book=}")
-                yield response.follow(book, callback=self.book_spider.parse)
-
-            logging.info(f"sleeping {REDIS_FETCH_INTERVAL} seconds")
-            sleep(REDIS_FETCH_INTERVAL)
+        for book in list_of_books:
+            logger.info(f"yielding {book=}")
+            yield response.follow(book, callback=self.book_spider.parse)

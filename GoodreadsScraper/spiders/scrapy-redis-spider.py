@@ -1,4 +1,3 @@
-import scrapy
 from scrapy_redis.spiders import RedisSpider
 
 from .book_spider import BookSpider
@@ -6,7 +5,7 @@ from .book_spider import BookSpider
 GOODREADS_URL_PREFIX = "https://www.goodreads.com"
 
 
-class MySpider(RedisSpider, scrapy.Spider):
+class MySpider(RedisSpider):
     """Spider that reads urls from redis queue (myspider:start_urls).
 
     Based on:
