@@ -2,6 +2,8 @@ from scrapy_redis.spiders import RedisSpider
 
 from .book_spider import BookSpider
 
+GOODREADS_URL_PREFIX = "https://www.goodreads.com"
+
 
 class MySpider(RedisSpider):
     """Spider that reads urls from redis queue (myspider:start_urls).
@@ -15,11 +17,15 @@ class MySpider(RedisSpider):
 
     def __init__(self, *args, **kwargs):
         # Dynamically define the allowed domains list.
-        domain = kwargs.pop("domain", "")
+        # TODO: use dynamically domains list, see scrapy-redis docs / source code?
+        # domain = kwargs.pop("domain", "")
+        domain = ["www.goodreads.com"]
         self.allowed_domains = filter(None, domain.split(","))
         super(MySpider, self).__init__(*args, **kwargs)
 
         self.book_spider = BookSpider()
+
+        self.start_urls = [GOODREADS_URL_PREFIX]
 
     # def parse(self, response):
     #     return {
