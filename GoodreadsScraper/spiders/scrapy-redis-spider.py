@@ -35,7 +35,8 @@ class MySpider(RedisSpider):
     #     }
 
     def parse(self, response):
-        yield response.follow(response.url, callback=self.book_spider.parse)
+        # yield response.follow(response.url, callback=self.book_spider.parse)
+        yield self.book_spider.parse(response)
 
     # def parse(self, response):
     #     # list_of_books = response.css("a.bookTitle::attr(href)").extract()
