@@ -93,7 +93,16 @@ class JsonLineItemSegregator(object):
 
 
 # TODO: here you can implement code for pushing item to redis queue..
-class RedisItemssegregator
+# class RedisItemssegregator
+
+
+class ExamplePipeline(object):
+    def process_item(self, item, spider):
+        item["crawled"] = datetime.utcnow()
+        item["spider"] = spider.name
+
+        logger.info(f"processed item: {item}")
+        return item
 
 
 class SingleItemSegregator(object):

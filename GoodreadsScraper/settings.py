@@ -92,6 +92,7 @@ DOWNLOAD_DELAY = 1
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     # 'GoodreadsScraper.pipelines.JsonLineItemSegregator': 300,
+    'GoodreadsScraper.pipelines.ExamplePipeline': 300,
     'scrapy_redis.pipelines.RedisPipeline': 400,
 }
 

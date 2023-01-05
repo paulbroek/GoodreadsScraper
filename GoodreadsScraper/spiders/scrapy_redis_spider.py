@@ -9,6 +9,7 @@ GOODREADS_URL_PREFIX = "https://www.goodreads.com"
 logger = logging.getLogger(__name__)
 
 
+# class MySpider(RedisSpider, BookSpider):
 class MySpider(RedisSpider, BookSpider):
     """Spider that reads urls from redis queue (myspider:start_urls).
 
@@ -25,10 +26,9 @@ class MySpider(RedisSpider, BookSpider):
         # domain = kwargs.pop("domain", "")
         domain = "www.goodreads.com"
         self.allowed_domains = filter(None, domain.split(","))
-        super(MySpider, BookSpider, self).__init__(*args, **kwargs)
-        # super().__init__(*args, **kwargs)
+        super(MySpider, self).__init__(*args, **kwargs)
 
-        # self.book_spider = BookSpider()
+        self.book_spider = BookSpider()
 
         self.start_urls = [GOODREADS_URL_PREFIX]
 
@@ -39,10 +39,12 @@ class MySpider(RedisSpider, BookSpider):
     #     }
 
     def parse(self, response):
-        # TODO: remove later
-        # book = "book/show/28830329-learning-scrapy"
         # yield response.follow(book, callback=self.book_spider.parse)
-        logger.info(f"self.parse: {self.parse}")
+        # logger.info(f"self.parse: {self.parse}")
+
+        # return {"url": response.url}
+        # return self.book_spider.parse(response.url)
+        logger.info(f"{type(response)=}")
         # yield response.follow(response.url, callback=self.book_spider.parse)
         yield response.follow(response.url, callback=self.parse)
 
