@@ -98,6 +98,15 @@ class RedisPipeline(object):
 
         redis_item["crawled"] = datetime.utcnow()
         redis_item["spider"] = spider.name
+        url = redis_item["item"]["url"]
+
+        redis_item["type"] = ""
+        if "/author/" in url:
+            redis_item["type"] = "author"
+        elif "/book/" in url:
+            redis_item["type"] = "book"
+        else:
+            raise Exception(f"type does not exist: goodreads_{url=}")
 
         logger.info(f"processed item: {redis_item}")
         return redis_item
