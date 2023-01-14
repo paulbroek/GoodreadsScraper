@@ -82,7 +82,7 @@ services:
 
     volumes:
       - /home/${USER}/repos/GoodreadsScraper:/mnt_src
-      - /home/paul/repos/misc-scraping/misc_scraping/scrape_goodreads/config:/home/paul/repos/misc-scraping/misc_scraping/scrape_goodreads/config
+      - /home/${USER}/repos/misc-scraping/misc_scraping/scrape_goodreads/config:/home/paul/repos/misc-scraping/misc_scraping/scrape_goodreads/config
 
   scrape-goodreads-feather-author:
     build: .
