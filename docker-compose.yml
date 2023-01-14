@@ -63,12 +63,6 @@ services:
       - LIST_TO_SCRAPE=redis_books
       - OUTPUT_FILE_SUFFIX=redis_books
       - SCRAPE_GOODREADS_CONFIG_FILE=/home/paul/repos/misc-scraping/misc_scraping/scrape_goodreads/config/db.prod.cfg
-      # - REDIS_HOST=213.93.184.218
-      # - REDIS_HOST=127.0.0.1
-      # - REDIS_PORT=6382
-      # - REDIS_DB=4
-      # - REDIS_PORT=6382
-      # - POSTGRES_PORT=5432
     command:
       - /bin/bash
       - -c
