@@ -5,7 +5,8 @@ import sys
 
 import scrapy  # type: ignore[import]
 from rarc_utils.sqlalchemy_base import get_session
-from scrape_goodreads.models import AuthorToScrape, psql
+from scrape_goodreads.models import AuthorToScrape
+from scrape_goodreads.models.config import load_config_file, psql
 from scrapy.utils.project import get_project_settings
 from sqlalchemy import select
 
@@ -20,9 +21,8 @@ UPDATE_POSTGRES_PER_ITEM = settings.get("UPDATE_POSTGRES_PER_ITEM")
 EXIT_ON_ZERO_TODO = settings.get("EXIT_ON_ZERO_TODO")
 
 # or use env variable?
-settings = get_project_settings()
-psql.host = settings.get("POSTGRES_HOST")
-psql.port = settings.get("POSTGRES_PORT")
+# psql.host = settings.get("POSTGRES_HOST")
+# psql.port = settings.get("POSTGRES_PORT")
 
 if UPDATE_POSTGRES_PER_ITEM:
     psql_session = get_session(psql)()

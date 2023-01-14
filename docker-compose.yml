@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   scrape-goodreads-list:
-    image: scrapy-env
+    build: .
     container_name: scrape-goodreads-list
     # restart: unless-stopped
     # network_mode:  host
@@ -33,7 +33,7 @@ services:
       - /home/${USER}/repos/GoodreadsScraper:/mnt_src
 
   scrape-goodreads-author-list:
-    image: scrapy-env
+    build: .
     container_name: scrape-goodreads-author-list
     # environment:
     # - LIST_TO_SCRAPE=4562806.Dan_S_Kennedy
@@ -55,13 +55,14 @@ services:
       - /home/${USER}/repos/GoodreadsScraper:/mnt_src
 
   scrape-goodreads-redis:
-    image: scrapy-env
+    build: .
     container_name: scrape-goodreads-redis
     # restart: unless-stopped
     network_mode: host
     environment:
       - LIST_TO_SCRAPE=redis_books
       - OUTPUT_FILE_SUFFIX=redis_books
+      - SCRAPE_GOODREADS_CONFIG_FILE=/home/paul/repos/misc-scraping/misc_scraping/scrape_goodreads/config/db.prod.cfg
       # - REDIS_HOST=213.93.184.218
       # - REDIS_HOST=127.0.0.1
       # - REDIS_PORT=6382
@@ -81,9 +82,10 @@ services:
 
     volumes:
       - /home/${USER}/repos/GoodreadsScraper:/mnt_src
+      - /home/paul/repos/misc-scraping/misc_scraping//scrape_goodreads/config:/home/paul/repos/misc-scraping/misc_scraping//scrape_goodreads/config
 
   scrape-goodreads-feather-author:
-    image: scrapy-env
+    build: .
     container_name: scrape-goodreads-feather-author
     # restart: unless-stopped
     environment:
@@ -110,7 +112,7 @@ services:
       - /home/${USER}/repos/GoodreadsScraper:/mnt_src
 
   scrape-goodreads-pg-author:
-    image: scrapy-env
+    build: .
     container_name: scrape-goodreads-pg-author
     # restart: unless-stopped
     environment:

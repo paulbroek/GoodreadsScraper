@@ -5,7 +5,8 @@ import os
 from datetime import datetime
 
 from rarc_utils.sqlalchemy_base import get_session
-from scrape_goodreads.models import AuthorToScrape, psql
+from scrape_goodreads.models import AuthorToScrape
+from scrape_goodreads.models.config import load_config_file, psql
 # Define your item pipelines here
 #
 from scrapy import signals
