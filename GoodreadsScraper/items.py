@@ -268,13 +268,14 @@ class BookItem(scrapy.Item):
             json_field_extractor_v2("props.pageProps.apolloState.Book*.details.isbn13")
         )
     )
-    publisher = Field(
-        input_processor=MapCompose(
-            json_field_extractor_v2(
-                "props.pageProps.apolloState.Book*.details.publisher"
-            )
-        )
-    )
+    # TODO: update model to accept this field
+    # publisher = Field(
+    #     input_processor=MapCompose(
+    #         json_field_extractor_v2(
+    #             "props.pageProps.apolloState.Book*.details.publisher"
+    #         )
+    #     )
+    # )
     publish_date = Field(
         input_processor=MapCompose(
             json_field_extractor_v2(
@@ -350,7 +351,8 @@ class BookItem(scrapy.Item):
                 "props.pageProps.apolloState.Work*.stats.ratingsCountDist"
             )
         ),
-        output_processor=MapCompose(extract_ratings_from_list),
+        output_processor=Compose(MapCompose(extract_ratings_from_list), TakeFirst()),
+        # output_processor=extract_ratings_from_list,
     )
 
     num_pages = Field(

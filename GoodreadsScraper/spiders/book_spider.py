@@ -85,7 +85,7 @@ class BookSpider(scrapy.Spider):
         loader.add_css("asin", "script#__NEXT_DATA__::text")
         loader.add_css("isbn", "script#__NEXT_DATA__::text")
         loader.add_css("isbn13", "script#__NEXT_DATA__::text")
-        loader.add_css("publisher", "script#__NEXT_DATA__::text")
+        # loader.add_css("publisher", "script#__NEXT_DATA__::text")
         loader.add_css("series", "script#__NEXT_DATA__::text")
         loader.add_css("author", "script#__NEXT_DATA__::text")
         loader.add_css("publish_date", "script#__NEXT_DATA__::text")
